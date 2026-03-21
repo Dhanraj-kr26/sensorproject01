@@ -12,7 +12,7 @@ from src.utils.main_utils import MainUtils
 from  dataclasses import dataclass
 
 @dataclass
-class PredictionPilelineConfig:
+class PredictionPipelineConfig:
     prediction_output_dirname:str="predictions"
     prediction_file_name:str="prediction_file.csv"
     model_file_path:str=os.path.join(artifact_folder,'model.pkl')
@@ -21,10 +21,10 @@ class PredictionPilelineConfig:
 
 
 class PredictionPipeline:
-    def __init__(self,request:request):
+    def __init__(self,request):
         self.request=request
         self.utils=MainUtils()
-        self.prediction_pipeline_config=PredictionPilelineConfig()
+        self.prediction_pipeline_config=PredictionPipelineConfig()
 
     def save_input_files(self) -> str:
         try:

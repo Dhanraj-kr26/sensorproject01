@@ -23,7 +23,7 @@ class ModelTrainerConfig:
     artifact_folder=os.path.join(artifact_folder)
     trained_model_path=os.path.join(artifact_folder,"model.pkl")
     expected_accuracy=0.45
-    model_config_file_path=os.path.join('conmfig','model.yaml')
+    model_config_file_path=os.path.join('config','model.yaml')
 
 class ModelTrainer:
     def __init__(self):
@@ -36,7 +36,7 @@ class ModelTrainer:
             'RandomForestClassifier':RandomForestClassifier()
         }
     
-    def evaluate_models(self,S,y,models):
+    def evaluate_models(self,X,y,models):
         try:
             X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.20,random_state=42)
 
@@ -45,7 +45,7 @@ class ModelTrainer:
                 model=list(models.values())[i]
                 model.fit(X_train,y_train)# Train model
 
-                y_train_pred=model.predixt(X_train)
+                y_train_pred=model.predict(X_train)
                 y_test_pred=model.predict(X_test)
 
                 train_model_score=accuracy_score(y_train,y_train_pred)
@@ -103,7 +103,7 @@ class ModelTrainer:
 
             print("best params are:",best_params)
 
-            finetuned_model=best_model_object.set_paramas(**best_params)
+            finetuned_model=best_model_object.set_params(**best_params)
 
             return finetuned_model
         
@@ -156,7 +156,7 @@ class ModelTrainer:
 
             os.makedirs(os.path.dirname(self.model_trainer_config.trained_model_path),exist_ok=True)
 
-            self.utils.save_objecr(
+            self.utils.save_object(
                 file_path=self.model_trainer_config.trained_model_path,
                 obj=best_model
             )
